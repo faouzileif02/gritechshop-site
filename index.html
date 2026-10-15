@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gritechshop.Ia – Automatisation, sites web, scripts | Luxembourg</title>
+<meta name="description" content="Gritechshop.Ia : automatisations n8n, sites web, feuilles Sheets/Excel, scripts, CV en ligne et SalonPilot. Devis gratuit.">
+<style>
+:root{
+  --nuit:#0b1530; --nuit2:#13224d; --bleu:#2f6bff; --cyan:#22d3ee; --accent:#ffb020;
+  --texte:#1b2440; --gris:#5d6783; --fond:#f5f7fc; --blanc:#fff;
+  --ombre:0 10px 30px rgba(11,21,48,.10); --ombre2:0 18px 44px rgba(47,107,255,.22);
+  --police:"Inter","Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:var(--police);color:var(--texte);background:var(--fond);line-height:1.6;-webkit-text-size-adjust:100%}
+img,svg{max-width:100%}
+a{color:inherit}
+.conteneur{width:min(1120px,100% - 40px);margin-inline:auto}
+section{padding:72px 0}
+h1,h2,h3{line-height:1.2;letter-spacing:-.01em}
+.sur-titre{display:inline-block;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--bleu);margin-bottom:10px}
+.titre-section{font-size:clamp(1.7rem,5vw,2.4rem);margin-bottom:12px;color:var(--nuit)}
+.intro-section{color:var(--gris);max-width:640px;margin-bottom:40px}
+
+/* Menu */
+header{position:sticky;top:0;z-index:50;background:rgba(11,21,48,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+.barre{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800}
+.logo-pastille{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--bleu),var(--cyan));display:grid;place-items:center;font-size:.95rem}
+.logo small{display:none;font-weight:500;opacity:.7}
+nav ul{list-style:none;display:none;gap:26px}
+nav a{color:#cfd8f5;text-decoration:none;font-size:.95rem;font-weight:500;transition:color .2s}
+nav a:hover{color:#fff}
+.btn-menu{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;font-size:1.3rem;cursor:pointer}
+nav.ouvert ul{display:flex;flex-direction:column;position:absolute;left:0;right:0;top:64px;background:var(--nuit);padding:18px 24px 24px;gap:16px;border-bottom:1px solid rgba(255,255,255,.1)}
+.cta-menu{display:none}
+
+/* Boutons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:12px;font-weight:700;text-decoration:none;font-size:1rem;border:2px solid transparent;cursor:pointer;font-family:inherit;transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-principal{background:linear-gradient(135deg,var(--accent),#ff8a1f);color:#1b1200;box-shadow:0 10px 24px rgba(255,160,32,.35)}
+.btn-secondaire{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.35)}
+.btn-secondaire:hover{background:rgba(255,255,255,.16)}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;color:#fff;padding:72px 0 88px;background:radial-gradient(900px 500px at 85% -10%,rgba(34,211,238,.28),transparent 60%),radial-gradient(700px 500px at -10% 110%,rgba(47,107,255,.45),transparent 60%),linear-gradient(160deg,var(--nuit),var(--nuit2))}
+.hero::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:26px 26px;mask-image:linear-gradient(to bottom,#000,transparent 85%);-webkit-mask-image:linear-gradient(to bottom,#000,transparent 85%);pointer-events:none}
+.hero .conteneur{position:relative;z-index:1;display:grid;gap:44px}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:7px 14px;border-radius:999px;font-size:.85rem;margin-bottom:20px}
+.hero h1{font-size:clamp(2rem,8vw,3.5rem);margin-bottom:18px;font-weight:800}
+.degrade{background:linear-gradient(90deg,var(--cyan),#8ab4ff 55%,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.sous-titre{font-size:1.1rem;color:#cdd7f6;max-width:560px;margin-bottom:30px}
+.hero-boutons{display:flex;flex-wrap:wrap;gap:14px}
+.hero-boutons .btn{flex:1 1 200px}
+.points{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:28px;color:#b9c6ee;font-size:.92rem;list-style:none}
+.hero-visuel{display:none}
+.fenetre{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:18px;box-shadow:0 30px 60px rgba(0,0,0,.35);backdrop-filter:blur(6px)}
+.fenetre .points-fen{display:flex;gap:6px;margin-bottom:14px}
+.fenetre .points-fen i{width:10px;height:10px;border-radius:50%;background:#ff5f57}
+.fenetre .points-fen i:nth-child(2){background:#febc2e}.fenetre .points-fen i:nth-child(3){background:#28c840}
+.flux{display:flex;flex-direction:column;gap:12px}
+.noeud{display:flex;align-items:center;gap:12px;background:rgba(11,21,48,.6);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;font-size:.95rem}
+.noeud b{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--bleu),var(--cyan));font-size:1.1rem}
+.lien{width:2px;height:14px;background:linear-gradient(var(--cyan),transparent);margin-left:30px}
+.flottant{animation:flotte 6s ease-in-out infinite}
+@keyframes flotte{50%{transform:translateY(-10px)}}
+
+/* Services */
+.grille{display:grid;gap:20px}
+.carte{background:var(--blanc);border-radius:18px;padding:26px;box-shadow:var(--ombre);border:1px solid #e8ecf6;transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden}
+.carte:hover{transform:translateY(-6px);box-shadow:var(--ombre2)}
+.icone{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-size:1.6rem;margin-bottom:16px;background:linear-gradient(135deg,#e7eeff,#dff8fd)}
+.carte h3{font-size:1.2rem;margin-bottom:8px;color:var(--nuit)}
+.carte p{color:var(--gris);font-size:.97rem}
+.etiquette{display:inline-block;margin-top:14px;font-size:.78rem;font-weight:700;padding:4px 10px;border-radius:999px;background:#fff4de;color:#9a5b00}
+
+/* Tarifs */
+.tarifs{background:linear-gradient(180deg,#eaf0ff,var(--fond))}
+.prix-carte{display:flex;flex-direction:column}
+.prix-carte .prix{font-size:1.9rem;font-weight:800;color:var(--bleu);margin:6px 0 4px;letter-spacing:-.02em}
+.prix-carte .prix small{font-size:.9rem;color:var(--gris);font-weight:600}
+.prix-carte ul{list-style:none;margin:12px 0 0;color:var(--gris);font-size:.94rem}
+.prix-carte li{padding-left:24px;position:relative;margin-bottom:6px}
+.prix-carte li::before{content:"✓";position:absolute;left:0;color:#14a86b;font-weight:800}
+.vedette{border:2px solid var(--bleu)}
+.vedette::before{content:"Pour les salons";position:absolute;top:14px;right:-34px;transform:rotate(35deg);background:var(--bleu);color:#fff;font-size:.7rem;font-weight:700;padding:3px 40px}
+.avis{margin-top:32px;display:flex;gap:12px;align-items:flex-start;background:#fff;border-left:5px solid var(--accent);padding:18px 20px;border-radius:12px;box-shadow:var(--ombre);color:var(--texte)}
+
+/* Etapes */
+.etapes{counter-reset:e;display:grid;gap:20px}
+.etape{background:#fff;border-radius:18px;padding:28px 24px;box-shadow:var(--ombre);border:1px solid #e8ecf6;position:relative}
+.etape::before{counter-increment:e;content:counter(e);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--bleu),var(--cyan));color:#fff;font-weight:800;font-size:1.2rem;margin-bottom:14px}
+.etape h3{margin-bottom:6px;color:var(--nuit)}
+.etape p{color:var(--gris);font-size:.96rem}
+
+/* Contact */
+.contact{background:linear-gradient(160deg,var(--nuit),var(--nuit2));color:#fff}
+.contact .titre-section{color:#fff}.contact .intro-section{color:#c3cff0}.contact .sur-titre{color:var(--cyan)}
+.contact-grille{display:grid;gap:28px}
+.coord{display:grid;gap:14px;align-content:start}
+.coord div{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:16px 18px}
+.coord strong{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--cyan);margin-bottom:4px}
+.coord span{font-style:italic;color:#e5ebff}
+.formulaire{background:#fff;color:var(--texte);border-radius:18px;padding:26px;box-shadow:0 24px 50px rgba(0,0,0,.3)}
+.formulaire label{display:block;font-weight:600;font-size:.9rem;margin:0 0 6px}
+.champ{margin-bottom:16px}
+.formulaire input,.formulaire select,.formulaire textarea{width:100%;padding:13px 14px;border:1.5px solid #d6dcee;border-radius:10px;font:inherit;font-size:1rem;background:#fbfcff;color:var(--texte);transition:border .2s,box-shadow .2s}
+.formulaire input:focus,.formulaire select:focus,.formulaire textarea:focus{outline:none;border-color:var(--bleu);box-shadow:0 0 0 4px rgba(47,107,255,.15)}
+.formulaire textarea{min-height:110px;resize:vertical}
+.formulaire .btn{width:100%}
+.bandeau-exemple{background:#fff4de;color:#7a4a00;border:1px dashed #e0a030;border-radius:10px;padding:10px 14px;font-size:.88rem;margin-bottom:18px;font-weight:600}
+.retour{display:none;margin-top:14px;padding:12px 14px;border-radius:10px;background:#e6f8ef;color:#0b6b43;font-weight:600;font-size:.92rem}
+.retour.visible{display:block}
+
+footer{background:#070e22;color:#98a6d1;padding:32px 0;font-size:.9rem}
+footer .conteneur{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+footer strong{color:#fff}
+
+/* Animations au scroll */
+.cache{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.cache.vu{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.cache{opacity:1;transform:none;transition:none}.flottant{animation:none}html{scroll-behavior:auto}}
+
+@media (min-width:640px){
+  .grille{grid-template-columns:repeat(2,1fr)}
+  .etapes{grid-template-columns:repeat(2,1fr)}
+  .logo small{display:inline}
+}
+@media (min-width:960px){
+  section{padding:96px 0}
+  .btn-menu{display:none}
+  nav ul{display:flex;align-items:center}
+  .cta-menu{display:inline-flex;padding:9px 18px;font-size:.92rem}
+  .hero{padding:110px 0 120px}
+  .hero .conteneur{grid-template-columns:1.15fr .85fr;align-items:center}
+  .hero-visuel{display:block}
+  .hero-boutons .btn{flex:0 0 auto}
+  .grille{grid-template-columns:repeat(3,1fr)}
+  .etapes{grid-template-columns:repeat(4,1fr)}
+  .contact-grille{grid-template-columns:.8fr 1.2fr}
+  footer .conteneur{flex-direction:row;justify-content:space-between;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="conteneur barre">
+    <a class="logo" href="#accueil" aria-label="Accueil">
+      <span class="logo-pastille">⚡</span>
+      <span>Gritechshop.Ia <small>· Luxembourg</small></span>
+    </a>
+    <nav id="menu" aria-label="Menu principal">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#tarifs">Tarifs</a></li>
+        <li><a href="#etapes">Comment ça marche</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a class="btn btn-principal cta-menu" href="#contact">Devis gratuit</a></li>
+      </ul>
+    </nav>
+    <button class="btn-menu" id="btnMenu" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="accueil">
+  <div class="conteneur">
+    <div>
+      <span class="badge">📍 Freelance basé au Luxembourg</span>
+      <h1>Gagnez du temps. <span class="degrade">Automatisez, créez, avancez.</span></h1>
+      <p class="sous-titre">Je crée pour vous des automatisations, des sites web, des tableaux Sheets/Excel et des scripts sur mesure. Simple, rapide et à prix clair.</p>
+      <div class="hero-boutons">
+        <a class="btn btn-principal" href="#services">Voir les services →</a>
+        <a class="btn btn-secondaire" href="#contact">Me contacter</a>
+      </div>
+      <ul class="points">
+        <li>✅ Devis gratuit</li>
+        <li>✅ Explications en français simple</li>
+        <li>✅ Prix annoncé avant de commencer</li>
+      </ul>
+    </div>
+    <div class="hero-visuel" aria-hidden="true">
+      <div class="fenetre flottant">
+        <div class="points-fen"><i></i><i></i><i></i></div>
+        <div class="flux">
+          <div class="noeud"><b>📩</b> Un client remplit un formulaire</div>
+          <div class="lien"></div>
+          <div class="noeud"><b>⚙️</b> L’automatisation s’en occupe</div>
+          <div class="lien"></div>
+          <div class="noeud"><b>📊</b> Le tableau se met à jour</div>
+          <div class="lien"></div>
+          <div class="noeud"><b>✅</b> Vous gagnez du temps</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="conteneur">
+    <span class="sur-titre">Mes services</span>
+    <h2 class="titre-section">Ce que je peux faire pour vous</h2>
+    <p class="intro-section">Un seul interlocuteur pour vos outils numériques, du petit tableau à la plateforme en ligne.</p>
+    <div class="grille">
+      <article class="carte cache"><div class="icone">🔄</div><h3>Automatisations n8n</h3><p>Fini les tâches répétitives : e-mails, tableaux, notifications et formulaires qui se font tout seuls, reliés entre vos outils.</p></article>
+      <article class="carte cache"><div class="icone">🌐</div><h3>Sites web</h3><p>Un site clair, moderne et adapté au téléphone pour présenter votre activité et être contacté facilement.</p></article>
+      <article class="carte cache"><div class="icone">📊</div><h3>Google Sheets / Excel</h3><p>Tableaux de bord, calculs automatiques, suivi des ventes ou du stock : vos chiffres enfin lisibles.</p></article>
+      <article class="carte cache"><div class="icone">💻</div><h3>Scripts et animations</h3><p>Petits programmes sur mesure en Python, Java ou C++, et scripts d’animation pour gagner du temps ou créer du visuel.</p></article>
+      <article class="carte cache"><div class="icone">📄</div><h3>Plateforme de CV en ligne</h3><p>Choisissez un modèle, remplissez un formulaire et téléchargez un CV professionnel en PDF. Environ 5 € par CV.</p><span class="etiquette">En préparation</span></article>
+      <article class="carte cache"><div class="icone">💇</div><h3>SalonPilot</h3><p>La réservation en ligne pour les salons au Luxembourg : vos clients réservent seuls, vous gérez votre agenda. Voir <strong>salonpilot.lu</strong>.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="tarifs" id="tarifs">
+  <div class="conteneur">
+    <span class="sur-titre">Exemples et tarifs</span>
+    <h2 class="titre-section">Des prix simples et annoncés à l’avance</h2>
+    <p class="intro-section">Voici quelques exemples de travaux avec une fourchette de prix. Le prix final dépend de votre besoin.</p>
+    <div class="grille">
+      <article class="carte prix-carte cache"><h3>🌐 Site web d’une page</h3><div class="prix">150 – 300 €</div><ul><li>Design moderne</li><li>Adapté au téléphone</li><li>Formulaire de contact</li></ul></article>
+      <article class="carte prix-carte cache"><h3>🔄 Automatisation n8n</h3><div class="prix">100 – 300 €</div><ul><li>Selon le nombre d’étapes</li><li>Tests inclus</li><li>Explications de prise en main</li></ul></article>
+      <article class="carte prix-carte cache"><h3>📊 Tableau de bord Sheets</h3><div class="prix">30 – 100 €</div><ul><li>Calculs automatiques</li><li>Graphiques lisibles</li><li>Prêt à utiliser</li></ul></article>
+      <article class="carte prix-carte cache"><h3>🐍 Script Python</h3><div class="prix">50 – 150 €</div><ul><li>Un besoin précis</li><li>Code livré avec mode d’emploi</li><li>Ajustements simples</li></ul></article>
+      <article class="carte prix-carte cache"><h3>📄 CV professionnel</h3><div class="prix">~ 5 € <small>par CV</small></div><ul><li>Modèles au choix</li><li>Export en PDF</li><li>Service en préparation</li></ul></article>
+      <article class="carte prix-carte vedette cache"><h3>💇 SalonPilot</h3><div class="prix">260 € <small>puis 24,99 €/mois</small></div><ul><li>Réservation en ligne pour salons</li><li>Pensé pour le Luxembourg</li><li>salonpilot.lu</li></ul></article>
+    </div>
+    <div class="avis cache"><span style="font-size:1.4rem">ℹ️</span><div><strong>Tarifs indicatifs, devis gratuit.</strong><br>Ces prix sont des exemples pour vous donner une idée. Décrivez-moi votre besoin et je vous réponds avec un prix précis, sans engagement.</div></div>
+  </div>
+</section>
+
+<section id="etapes">
+  <div class="conteneur">
+    <span class="sur-titre">Comment ça marche</span>
+    <h2 class="titre-section">4 étapes, sans complication</h2>
+    <p class="intro-section">Vous n’avez pas besoin de connaître la technique. Je m’occupe de tout et j’explique simplement.</p>
+    <div class="etapes">
+      <div class="etape cache"><h3>Vous décrivez votre besoin</h3><p>Quelques lignes suffisent : ce que vous voulez faire ou gagner comme temps.</p></div>
+      <div class="etape cache"><h3>Devis gratuit</h3><p>Je vous envoie un prix clair et un délai. Vous décidez, sans engagement.</p></div>
+      <div class="etape cache"><h3>Réalisation</h3><p>Je construis votre solution et je vous montre l’avancement.</p></div>
+      <div class="etape cache"><h3>Livraison et suivi</h3><p>Je vous livre, j’explique comment l’utiliser et je reste disponible pour la suite.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="conteneur">
+    <span class="sur-titre">Contact</span>
+    <h2 class="titre-section">Parlons de votre projet</h2>
+    <p class="intro-section">Décrivez votre besoin, je vous réponds avec un devis gratuit.</p>
+    <div class="contact-grille">
+      <div class="coord">
+        <div><strong>✉️ E-mail</strong><span><a href="mailto:guerrida.service@gmail.com" style="color:inherit">guerrida.service@gmail.com</a></span></div>
+        <div><strong>💬 WhatsApp Business</strong><span><a href="https://wa.me/message/KAH2VUTST7K3C1" target="_blank" rel="noopener" style="color:inherit">Écrire sur WhatsApp</a></span></div>
+        <div><strong>📍 Zone</strong><span>Luxembourg et à distance</span></div>
+      </div>
+      <form class="formulaire" id="formulaire" novalidate>
+        <div class="bandeau-exemple" style="background:#e8f1ff;color:#17407a;border-color:#8fb4ee">ℹ️ Ce bouton ouvre votre application e-mail avec votre message déjà rédigé.</div>
+        <div class="champ"><label for="nom">Votre nom</label><input id="nom" type="text" placeholder="Ex. : Marie Dupont" autocomplete="name"></div>
+        <div class="champ"><label for="email">Votre e-mail</label><input id="email" type="email" placeholder="votre@email.com" autocomplete="email"></div>
+        <div class="champ"><label for="service">Service souhaité</label>
+          <select id="service"><option>Automatisation n8n</option><option>Site web</option><option>Feuille Sheets / Excel</option><option>Script (Python, Java, C++…)</option><option>CV professionnel</option><option>SalonPilot</option><option>Autre</option></select></div>
+        <div class="champ"><label for="message">Votre besoin</label><textarea id="message" placeholder="Décrivez en quelques lignes ce que vous voulez."></textarea></div>
+        <button class="btn btn-principal" type="submit">Demander un devis gratuit</button>
+        <div class="retour" id="retour" role="status">Votre application e-mail va s’ouvrir. Vous pouvez aussi nous écrire sur WhatsApp.</div>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="conteneur">
+    <div><strong>Gritechshop.Ia</strong> · Luxembourg et à distance</div>
+    <div>guerrida.service@gmail.com · <a href="https://wa.me/message/KAH2VUTST7K3C1" target="_blank" rel="noopener" style="color:inherit">WhatsApp Business</a> · Aucune donnée collectée sur ce site · © 2026</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn=document.getElementById('btnMenu'),nav=document.getElementById('menu');
+  btn.addEventListener('click',function(){var o=nav.classList.toggle('ouvert');btn.setAttribute('aria-expanded',o);btn.textContent=o?'✕':'☰';});
+  nav.addEventListener('click',function(e){if(e.target.tagName==='A'){nav.classList.remove('ouvert');btn.textContent='☰';btn.setAttribute('aria-expanded','false');}});
+  document.getElementById('formulaire').addEventListener('submit',function(e){e.preventDefault();var g=function(i){return document.getElementById(i).value.trim()};var corps='Nom : '+g('nom')+'\nE-mail : '+g('email')+'\nService : '+g('service')+'\n\n'+g('message');window.location.href='mailto:guerrida.service@gmail.com?subject='+encodeURIComponent('Demande de devis – '+g('service'))+'&body='+encodeURIComponent(corps);document.getElementById('retour').classList.add('visible');});
+  var els=document.querySelectorAll('.cache');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('vu');io.unobserve(x.target);}});},{threshold:.12});
+    els.forEach(function(el,i){el.style.transitionDelay=((i%3)*80)+'ms';io.observe(el);});
+  }else{els.forEach(function(el){el.classList.add('vu');});}
+})();
+</script>
+</body>
+</html>
